@@ -2,6 +2,8 @@ import express, {Request, Response, NextFunction} from 'express';
 import 'express-async-errors';
 import mongoose from 'mongoose';
 
+import {router} from './routes';
+
 import "./Database"
 
 async function run(): Promise<void> {
@@ -13,6 +15,11 @@ run()
 const app = express();
 
 app.use(express.json());
+app.use(router)
+
+app.listen(3030, ()=>{
+    console.log('listening on port 3030');
+})
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction)=>{
     if(err instanceof Error){
@@ -24,9 +31,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction)=>{
     })
 })
 
-app.listen(3030, ()=>{
-    console.log('listening on port 3030');
-})
+
 
 app.get("/teste", (req:Request, res:Response)=>{
     console.log(process.env.SENHA);
