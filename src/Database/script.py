@@ -17,8 +17,7 @@ def create():
         Name VARCHAR NOT NULL PRIMARY KEY,
         hp  INTEGER NOT NULL,
         Type VARCHAR NOT NULL,
-        Secundary_type VARCHAR,
-        Abilities VARCHAR ARRAY[1000]
+        Secundary_type VARCHAR
     )'''
     cursor.execute(sql)
     conn.commit()
@@ -35,7 +34,7 @@ def insert():
         try:
             sql = '''INSERT INTO Pokes(Id, Name, hp, Type, Secundary_type) 
                 VALUES
-                ({0}, "{1}", {2}, '{3}', '{4}')'''.format(id, Name, Hp, type1, type2,abilities)
+                ({0}, "{1}", {2}, '{3}', '{4}')'''.format(id, Name, Hp, type1, type2)
         
             cursor.execute( sql)
         except sqlite3.OperationalError:
@@ -46,10 +45,15 @@ def insert():
 def exclude():
     cursor.execute('DROP TABLE Pokes')
 
+def DropColumn():
+    cursor.execute('ALTER TABLE Pokes DROP COLUMN Abilities')
+    conn.commit()
+
 cursor = conn.cursor()
 
 exclude()
 create()
 insert()
+
 
 conn.close()

@@ -19,8 +19,6 @@ class Poke{
     @Column()
     Secundary_type: string;
 
-    @Column()
-    Abilities: string[];
 }
 
 export { Poke }
