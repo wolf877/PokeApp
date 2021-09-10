@@ -13,6 +13,7 @@ conn = sqlite3.connect(r"C:\Users\willi\OneDrive\Documents\projeto\src\Database\
 
 def create():
     sql = '''CREATE TABLE Pokes(
+        Id INTEGER NOT NULL UNIQUE,
         Name VARCHAR NOT NULL PRIMARY KEY,
         hp  INTEGER NOT NULL,
         Type VARCHAR NOT NULL,
@@ -23,16 +24,18 @@ def create():
     conn.commit()
 
 def insert():
+    id = 0
     for row in data.itertuples():
+        id += 1
         Name = row.name
         Hp = row.hp
         type1 = row.type1
         type2 = row.type2
         abilities = row.abilities
         try:
-            sql = '''INSERT INTO Pokes(Name, hp, Type, Secundary_type) 
+            sql = '''INSERT INTO Pokes(Id, Name, hp, Type, Secundary_type) 
                 VALUES
-                ("{0}", {1}, '{2}', '{3}')'''.format(Name, Hp, type1, type2,abilities)
+                ({0}, "{1}", {2}, '{3}', '{4}')'''.format(id, Name, Hp, type1, type2,abilities)
         
             cursor.execute( sql)
         except sqlite3.OperationalError:
@@ -45,7 +48,7 @@ def exclude():
 
 cursor = conn.cursor()
 
-#exclude()
+exclude()
 create()
 insert()
 
