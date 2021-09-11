@@ -1,9 +1,10 @@
 import { getCustomRepository } from "typeorm";
 import { UsersRepository } from "../repositories/UserRepository";
 import { hash } from "bcryptjs";
-import nodemailer from "nodemailer";
+
 
 import {UserModel} from "../models/UserModel";
+import { sendEmail } from "../function/sendEmail";
 
 interface UserRequest{
     name: string;
@@ -43,6 +44,8 @@ class CreateUserService{
        await newUser.save();
 
        await userRepository.save(user);
+
+       sendEmail(email, name);
 
        return user;
 
