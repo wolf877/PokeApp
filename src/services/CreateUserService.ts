@@ -18,6 +18,8 @@ class CreateUserService{
             throw new Error("Please enter fill all required fields")
         }
         
+        email = email.toLowerCase()
+
         const userRepository = getCustomRepository(UsersRepository)
         
         const userAlreadyExists = await userRepository.findOne({ 

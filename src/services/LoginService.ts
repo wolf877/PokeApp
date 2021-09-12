@@ -12,6 +12,8 @@ class LoginService{
     async execute({email, password}:LoginRequests){
         const userRepository = getCustomRepository(UsersRepository);
 
+        email = email.toLowerCase()
+        
         const user = await userRepository.findOne({email})
 
         if(!user){

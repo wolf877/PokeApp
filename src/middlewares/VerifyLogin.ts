@@ -13,7 +13,7 @@ export function VerifyLogin(req: Request, res: Response, next: NextFunction){
         return res.status(401).end();
     }
 
-    const [, token] = Authorization.split("")
+    const [, token] = Authorization.split(" ")
 
     try{
         const { sub } = verify(token, process.env.CHAVE) as data;
